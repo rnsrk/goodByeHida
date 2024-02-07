@@ -18,7 +18,7 @@ place the XML files in the `docs` folder or for evaluation purposes few files in
 
 ## Purpose
 The program iterates through the docs dir and in a first run, it builds database schemas from the 
-structure of the XML files, which will be used to create a data model for an SQLlite databse.
+structure of the XML files, which will be used to create a data model for an SQLite database.
 In a second iteration, every node with children or node with a "txt" element will be an entity (beginning with c__)
 all other elements will be attributes (beginning with f__). Entities will be connected with an uuid
 foreign key to their parent entity in relational tables (beginning with r__).
@@ -33,7 +33,7 @@ If everything looks good you can run the script with the `docs` folder:
 ```bash
 python3 goodByeHida.py --production True --buildSchemas True 
 ```
-You will get a dir `schemas` and a sqlite database `databse.db` with the imported data.
+You will get a dir `schemas` and a sqlite database `database.db` with the imported data.
 
 If you like to restart the process and delete the database, type:
 ```bash
