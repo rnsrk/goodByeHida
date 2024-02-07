@@ -16,6 +16,12 @@ pip install -r requirements.txt
 ```
 place the XML files in the `docs` folder or for evaluation purposes few files in the `test-docs` folder.
 
+## Purpose
+The program iterates through the docs dir and in a first run, it builds database schemas from the 
+structure of the XML files, which will be used to create a data model for an SQLlite databse.
+In a second iteration, every node with children or node with a "txt" element will be an entity (beginning with c__)
+all other elements will be attributes (beginning with f__). Entities will be connected with an uuid
+foreign key to their parent entity in relational tables (beginning with r__).
 ## Usage
 To have a test run, place XML-files in a dir named `test-docs`, then type
 ```bash

@@ -1,8 +1,8 @@
 kram
-docs
-schemas
-test-docs
-test-schemas
+docs/*
+schemas/*
+test-docs/*
+test-schemas/*
 database.db
 test.db
 venv
