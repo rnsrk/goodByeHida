@@ -1,6 +1,6 @@
 import json
 import os
-from sqlalchemy import Column, Integer, String, Table
+from sqlalchemy import Column, Integer, String, Table, Text
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -21,7 +21,7 @@ def createClass(name, columns):
 
     # Transform columns and add prefix
     attrs = {'__tablename__': tableName}
-    attrs.update({prop.lower().replace('-', '_').replace('.', '_').replace(' ', '_').replace('(', '_').replace(')','_').replace('ä', 'ae').replace('ö', 'oe').replace('ü', 'ue').replace('ß', 'ss').replace('?', '_'): (Column(String, primary_key=True) if prop.lower() == 'uuid' else Column(String)) for prop in columns})
+    attrs.update({prop.lower().replace('-', '_').replace('.', '_').replace(' ', '_').replace('(', '_').replace(')','_').replace('ä', 'ae').replace('ö', 'oe').replace('ü', 'ue').replace('ß', 'ss').replace('?', '_'): (Column(String(36), primary_key=True) if prop.lower() == 'uuid' else Column(Text)) for prop in columns})
 
     # If 'uuid' is not in columns, add 'id' as primary key
     if 'uuid' not in [prop.lower() for prop in columns]:

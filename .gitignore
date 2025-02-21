@@ -6,5 +6,6 @@ test-schemas/*
 database.db
 test.db
 venv
+wisski_py
 .idea
 __pycache__

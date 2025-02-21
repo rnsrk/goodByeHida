@@ -1,3 +1,6 @@
+python-dotenv
 pandas
+pymysql
 sqlalchemy
 tqdm
+wisski_py
