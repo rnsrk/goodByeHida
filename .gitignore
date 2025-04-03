@@ -1,4 +1,4 @@
-kram
+kram/*
 docs/*
 schemas/*
 test-docs/*
@@ -10,3 +10,4 @@ wisski_py
 .idea
 __pycache__
 logs/*
+.venv
