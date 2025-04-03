@@ -23,7 +23,7 @@ headers = {"Cache-Control": "no-cache"}
 api = Api(api_url, auth, headers)
 api.pathbuilder = api.get_pathbuilder('relations')
 
-test = True
+test = False
 
 tableName = "r__kue__3007_bezieh__zu_gs"
 bundleId = 'b464b2b43aaa27aaba71e337c9af649c' # Artist to goldsmith relation

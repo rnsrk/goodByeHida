@@ -23,6 +23,7 @@ headers = {"Cache-Control": "no-cache"}
 api = Api(api_url, auth, headers)
 api.pathbuilder = api.get_pathbuilder('default')
 
+test = True
 
 tableName = "c__3330_todes_dat_"
 bundleId = 'b487c08016f572b9ecf3f9173339fec3'
@@ -40,9 +41,9 @@ entityValues = {}
 # Create entities
 for index, row in sqlTable.iterrows():
     # For every row in table...
-    if index < len(processedRows) and sqlTable.iloc[index, 'docId'] == processedRows.iloc[index, 'docId']:
+    if index < len(processedRows) and sqlTable.loc[index, 'id'] == processedRows.loc[index, 'docId']:
         # skip if already processed
-        print(f'Skipping already processed entity {sqlTable.iloc[index, 0]}')
+        print(f'Skipping already processed entity {sqlTable.loc[index, 'id']}')
         continue
     # Create Entity property dicts
     entityValues = {}
@@ -65,7 +66,7 @@ for index, row in sqlTable.iterrows():
                 docId = value[0]
             case 'f__uuid':
                 entityValues['f8beb0d372a5cf6f1668c47acf7e53cd'] = value # UUID
-                uuid = value[0]
+                fUuid = value[0]
             case 'f__3330_todes_dat_':
                 entityValues['f385a8c323f0a2f49d8eb175e1535b1b'] = value # Death date
             case 'f__33ls_lit__stelle':
@@ -94,5 +95,8 @@ for index, row in sqlTable.iterrows():
     # Write log
     processedRows = processedRows._append({'docId': docId, 'uuid': fUuid, 'uri': entity.uri}, ignore_index=True)
     processedRows.to_csv(f'./logs/processed-{tableName}.csv', index=False)
+
+    if test:
+        break
 
 print('finish')

@@ -135,6 +135,7 @@ for index, row in artifactsTable.iterrows():
                 for item in value:
                     if item is not None:
                         # Replace dir paths in name
+                        item = item.replace('Objekte/', 'objects/')
                         item = item.replace('Objekte\\', 'objects/')
                         item = item.replace('Objekte3\\', 'objects/')
                         item = item.replace('Objekte4\\', 'objects/')

@@ -23,6 +23,8 @@ headers = {"Cache-Control": "no-cache"}
 api = Api(api_url, auth, headers)
 api.pathbuilder = api.get_pathbuilder('default')
 
+test = True
+
 try:
     processedRows = pd.read_csv(f'./logs/processedArtists.csv')
 except FileNotFoundError:
@@ -34,7 +36,7 @@ artistsTable = pd.read_sql_table('c__kue', con=engine)
 artistValues = {}
 digitisationProcessValues = {'f32274ec0032b8778ba69d20108590cc': [str(uuid.uuid4())]}
 imageValues = {}
-imageAssignmentValues = {'f067784f5b1ff850672124a2b05360de': [str(uuid.uuid4())]}
+reproNumberAssignmentValues = {'fac4426c096e7f8f44bb0e11b8394952': [str(uuid.uuid4())]}
 
 # Create artists
 for index, row in artistsTable.iterrows():
@@ -108,7 +110,7 @@ for index, row in artistsTable.iterrows():
                         item = item.replace('Epitaphien/', 'epitaphies/')
                         item = item.replace('Epitaphien\\', 'epitaphies/')
                         imageValues.setdefault(item, {})['feb10344eaa7a5f414d1e8392853eba9'] = [item] # Reproduction Number (Image)
-                        imageValues[item]['fc8d57e55f203c75c2f8a1ae79378ac7'] = ['public://artifact_images/' + item + '.jpg'] # File
+                        imageValues[item]['fc8d57e55f203c75c2f8a1ae79378ac7'] = ['public://artist_images/' + item + '.jpg'] # File
                         imageValues[item]['f11beac4b638016479e6f3fbc7e55d1a'] = [str(uuid.uuid4())] # UUID
             case 'f__6770_rosenb_nr_':
                 artistValues['f82ed1dc96df9230e28e04fef0ff2305'] = value # Rosenberg number
@@ -138,12 +140,13 @@ for index, row in artistsTable.iterrows():
     # Create Image Assignment entities and add their UUIDs to a list
     # because we link Artist and Image Assignment over the UUID
     if imageList:
-        imageAssignmentValues['f70afb79b45472fee3d02f011caa4b36'] = imageList # List of Image UUIDs
-        imageAssignment = Entity(api=api, fields=imageAssignmentValues, bundle_id='b88e5d94fb2a83d62df99cf64d6c010c')
-        api.save(imageAssignment)
+        reproNumberAssignmentValues['f2cd4ece6e60bf288b9ae769af08bc44'] = imageList # List of Image UUIDs
+        reproNumberAssignment = Entity(api=api, fields=reproNumberAssignmentValues, bundle_id='bdc233b242374a41b5e6923eee937fe9')
+        api.save(reproNumberAssignment)
 
-    if imageAssignmentValues['f067784f5b1ff850672124a2b05360de'][0]:
-        artistValues['fbcc1a8aa38d416e580e0d1c9ff11e58'] = [imageAssignmentValues['f067784f5b1ff850672124a2b05360de'][0]] # Image Assignment
+
+    if reproNumberAssignmentValues['f2cd4ece6e60bf288b9ae769af08bc44'][0]:
+        artistValues['f42deb039d8d4f47877892af005a1ef9'] = [reproNumberAssignmentValues['fac4426c096e7f8f44bb0e11b8394952'][0]] # Image Assignment
     if digitisationProcessValues['f32274ec0032b8778ba69d20108590cc'][0]:
         artistValues['f6c2b79f1ba142bb62f83b2c4d805e49'] = [digitisationProcessValues['f32274ec0032b8778ba69d20108590cc'][0]] # Digitisation Process
 
@@ -157,5 +160,10 @@ for index, row in artistsTable.iterrows():
     # Write log
     processedRows = processedRows._append({'artistId': artistValues['f61deac361ac5e0731edbf214761d15c'][0], 'uuid': artistValues['fff2eb2283e4cd8df3783602a1bc96ab'][0], 'uri': artist.uri}, ignore_index=True)
     processedRows.to_csv(f'./logs/processedArtists.csv', index=False)
+
+
+    if test:
+        print('Testing mode activated. Exiting.')
+        exit()
 
 print('finish')

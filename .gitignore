@@ -9,3 +9,4 @@ venv
 wisski_py
 .idea
 __pycache__
+logs/*
